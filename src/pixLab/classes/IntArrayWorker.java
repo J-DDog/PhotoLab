@@ -106,12 +106,18 @@ public class IntArrayWorker
     }
   }
 
-	public int getCount(int col)
+	public int getCount(int num)
 	{
 		int total = 0;
 		for(int row = 0; row < matrix.length; row++)
 		{
-			total += matrix[row][col];
+			for(int col = 0; col < matrix[row].length; col++)
+			{
+				if(matrix[row][col] == num)
+				{
+					total++;
+				}
+			}
 		}
 		return total;
 	}
