@@ -55,20 +55,20 @@ public class Picture extends SimplePicture
    * copy of that picture
    * @param copyPicture the picture to copy
    */
-  public Picture(Picture copyPicture)
-  {
-    // let the parent class do the copy
-    super(copyPicture);
-  }
+	public Picture(Picture copyPicture)
+	{
+		// let the parent class do the copy
+		super(copyPicture);
+	}
   
-  /**
-   * Constructor that takes a buffered image
-   * @param image the buffered image to use
-   */
-  public Picture(BufferedImage image)
-  {
-    super(image);
-  }
+	/**
+	 * Constructor that takes a buffered image
+	 * @param image the buffered image to use
+	 */
+	public Picture(BufferedImage image)
+	{
+		super(image);
+	}
   
   ////////////////////// methods ///////////////////////////////////////
   
@@ -77,77 +77,145 @@ public class Picture extends SimplePicture
    * @return a string with information about the picture such as fileName,
    * height and width.
    */
-  public String toString()
-  {
-    String output = "Picture, filename " + getFileName() + 
-      " height " + getHeight() 
-      + " width " + getWidth();
-    return output;
+	public String toString()
+	{
+		String output = "Picture, filename " + getFileName() + 
+				" height " + getHeight() 
+				+ " width " + getWidth();
+		return output;
     
-  }
+	}
   
   /** Method to set the blue to 0 */
-  public void zeroBlue()
-  {
-    Pixel[][] pixels = this.getPixels2D();
-    for (Pixel[] rowArray : pixels)
-    {
-      for (Pixel pixelObj : rowArray)
-      {
-        pixelObj.setBlue(0);
-      }
-    }
-  }
+	public void zeroBlue()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels)
+		{
+			for (Pixel pixelObj : rowArray)
+			{
+				pixelObj.setBlue(0);
+      		}
+		}
+	}
+	
+	public void keepOnlyBlue()
+	{
+		this.zeroGreen();
+		this.zeroRed();
+	}
   
   /** Method to set the green to 0 */
-  public void zeroGreen()
-  {
-	  Pixel[][] original = this.getPixels2D();
-	  for(int row = 0; row < original.length; row++)
-	  {
-		  for(int col = 0; col < original[0].length; col++)
-		  {
-			 Pixel currentPixel = original[row][col];
-			 currentPixel.setRed(0);
+	public void zeroGreen()
+	{
+		Pixel[][] original = this.getPixels2D();
+		for(int row = 0; row < original.length; row++)
+		{
+			for(int col = 0; col < original[0].length; col++)
+		  	{
+				Pixel currentPixel = original[row][col];
+				currentPixel.setGreen(0);
 			 
-			 original[row][col].setRed(0);
-		  }
-	  }
-  }
+				original[row][col].setGreen(0);
+		  	}
+	  	}
+	}
+  
+	public void keepOnlyGreen()
+	{
+	  this.zeroBlue();
+	  this.zeroRed();
+	}
   
   /** Method to set the red to 0 */
-  public void zeroRed()
-  {
-    Pixel[][] pixels = this.getPixels2D();
-    for (Pixel[] rowArray : pixels)
-    {
-      for (Pixel pixelObj : rowArray)
-      {
-        pixelObj.setRed(0);
-      }
-    }
-  }
+	public void zeroRed()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels)
+		{
+			for (Pixel pixelObj : rowArray)
+			{
+				pixelObj.setRed(0);
+			}
+		}
+	}
   
+	private void keepOnlyRed()
+	{
+		this.zeroGreen();
+		this.zeroBlue();
+	}
   
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
-  public void mirrorVertical()
-  {
-    Pixel[][] pixels = this.getPixels2D();
-    Pixel leftPixel = null;
-    Pixel rightPixel = null;
-    int width = pixels[0].length;
-    for (int row = 0; row < pixels.length; row++)
-    {
-      for (int col = 0; col < width / 2; col++)
-      {
-        leftPixel = pixels[row][col];
-        rightPixel = pixels[row][width - 1 - col];
-        rightPixel.setColor(leftPixel.getColor());
-      }
-    } 
-  }
+	public void mirrorVertical()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Pixel leftPixel = null;
+		Pixel rightPixel = null;
+		int width = pixels[0].length;
+		for (int row = 0; row < pixels.length; row++)
+		{
+			for (int col = 0; col < width / 2; col++)
+			{
+				leftPixel = pixels[row][col];
+				rightPixel = pixels[row][width - 1 - col];
+				rightPixel.setColor(leftPixel.getColor());
+			}
+		} 
+	}
+	
+	public void mirrorVerticalRightToLeft()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Pixel leftPixel = null;
+		Pixel rightPixel = null;
+		int width = pixels[0].length;
+		for (int row = 0; row < pixels.length; row++)
+		{
+			for (int col = 0; col < width / 2; col++)
+			{
+				leftPixel = pixels[row][col];
+				rightPixel = pixels[row][width - 1 - col];
+				leftPixel.setColor(rightPixel.getColor());
+			}
+		} 
+	}
+	
+	public void mirrorHorizontal()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Pixel topPixel = null;
+		Pixel bottomPixel = null;
+		int hight = pixels.length;
+		for (int row = 0; row < hight / 2; row++)
+		{
+			for (int col = 0; col < pixels[0].length; col++)
+			{
+				topPixel = pixels[row][col];
+				bottomPixel = pixels[hight - 1 - row][col];
+				bottomPixel.setColor(topPixel.getColor());
+			}
+		} 
+	}
+	
+	public void mirrorHorizontalBottomToTop()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Pixel topPixel = null;
+		Pixel bottomPixel = null;
+		int hight = pixels.length;
+		for (int row = 0; row < hight / 2; row++)
+		{
+			for (int col = 0; col < pixels[0].length; col++)
+			{
+				topPixel = pixels[row][col];
+				bottomPixel = pixels[hight - 1 - row][col];
+				topPixel.setColor(bottomPixel.getColor());
+			}
+		} 
+	}
   
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
@@ -166,8 +234,7 @@ public class Picture extends SimplePicture
       {
         
         leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
+        rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
       }
     }
@@ -257,8 +324,7 @@ public class Picture extends SimplePicture
   {
     Picture beach = new Picture("beach.jpg");
     beach.explore();
-    beach.zeroRed();
-    beach.zeroGreen();
+    beach.mirrorHorizontalBottomToTop();
     beach.explore();
   }
   
