@@ -95,6 +95,19 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
   /** the number system to use, 0 means starting at 0, 1 means starting at 1 */
   private int numberBase=0;
   
+  /** Jared Contstants */
+  public static final int RELATIVUP = 0;
+  public static final int RELATIVDOWN = 1;
+  public static final int RELATIVLEFT = 2;
+  public static final int RELATIVRIGHT = 3;
+  
+  /** Jared Data Members */
+  private int cursorXPressedPos = 0;
+  private int cursorYPressedPos = 0;
+  
+  private int currentCursorX = 0;
+  private int currentCursorY = 0;
+  
   /**
    * Public constructor 
    * @param picture the picture to explore
@@ -649,6 +662,7 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
   public void mousePressed(MouseEvent e)
   {
     displayPixelInformation(e);
+    setPressedPos(e);
   }
   
   /**
@@ -657,6 +671,7 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
    */
   public void mouseReleased(MouseEvent e)
   {
+	  setCurrentCursorPos(e);
   }
   
   /**
@@ -802,6 +817,40 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
   {
     Picture pix = new Picture("beach.jpg");
     pix.explore();
+  }
+  
+  private void setCurrentCursorPos(MouseEvent e)
+  {
+	  currentCursorX = e.getX();
+	  currentCursorY = e.getY();
+	  
+  }
+  
+  public void setPressedPos(MouseEvent e)
+  {
+	  cursorXPressedPos = e.getX();
+	  cursorYPressedPos = e.getY();
+	  
+  }
+  
+  int getCurrentCursorPosX()
+  {
+	  return currentCursorX;
+  }
+  
+  int getCurrentCursorPosY()
+  {
+	  return currentCursorY;
+  }
+ 
+  int getCursorXPressedPosX()
+  {
+	  return currentCursorX;
+  }
+  
+  int getCursorXPressedPosY()
+  {
+	  return currentCursorX;
   }
   
 }
