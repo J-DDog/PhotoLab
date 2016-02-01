@@ -210,9 +210,11 @@ public class Picture extends SimplePicture
 		{
 			for (int col = 0; col < pixels[0].length; col++)
 			{
+				//Initializing top and bottom pixels
 				topPixel = pixels[row][col];
 				bottomPixel = pixels[hight - 1 - row][col];
-				topPixel.setColor(bottomPixel.getColor());
+				
+				topPixel.setColor(bottomPixel.getColor()); //Applying Mirror
 			}
 		} 
 	}
@@ -223,7 +225,6 @@ public class Picture extends SimplePicture
     int mirrorPoint = 276;
     Pixel leftPixel = null;
     Pixel rightPixel = null;
-    int count = 0;
     Pixel[][] pixels = this.getPixels2D();
     
     // loop through the rows
@@ -232,13 +233,84 @@ public class Picture extends SimplePicture
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
       {
-        
+    	//Initializing right and left pixels
         leftPixel = pixels[row][col];      
         rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
-        rightPixel.setColor(leftPixel.getColor());
+        
+        rightPixel.setColor(leftPixel.getColor()); //Applying Mirror
       }
     }
   }
+  
+  	@SuppressWarnings("unused")
+	public void mirrorArms()
+  	{
+  		int mirrorPoint = 185;
+  	    Pixel topPixel = null;
+  	    Pixel bottomPixel = null;
+  	    Pixel[][] pixels = this.getPixels2D();
+  	    
+  	// loop through the rows
+  	    for (int row = 160; row < mirrorPoint; row++)
+  	    {
+  	    	// loop from 13 to just before the mirror point
+  	    	for (int col = 105; col < 170; col++)
+  	    	{
+  	    		//Initializing right and left pixels
+  	    		topPixel = pixels[row][col];      
+  	    		bottomPixel = pixels[mirrorPoint - row + mirrorPoint][col];
+  	        
+  	    		bottomPixel.setColor(topPixel.getColor()); //Applying Mirror
+  	    	}
+  	    }
+  	    
+  	    // If statement to choose the form of the right two arms
+  	    if(true)
+  	    {
+  	    	// Mirroring for the right arms by mirroring the right arm horizontally
+  	    	mirrorPoint = 188;
+  	  	    
+    		// Loop from top of arm to bottom aka. mirrorPoint
+    	    for (int row = 170; row < mirrorPoint; row++)
+    	    {
+    	    	// loop from 238 to just 294
+    	    	for (int col = 238; col < 294; col++)
+    	    	{
+    	    		//Initializing right and left pixels
+    	    		topPixel = pixels[row][col];      //Setting the top pixel
+    	    		bottomPixel = pixels[mirrorPoint - row + mirrorPoint][col];		//Setting the bottom pixel
+    	        
+    	    		bottomPixel.setColor(topPixel.getColor()); //Applying Mirror
+    	    	}
+    	    }
+  	    }
+  	    else
+  	    {
+  	    	// Mirroring for the right arms by mirroring the left arm
+  	    	mirrorPoint = 170;
+  	  	    int gap = 72;
+  		    Pixel leftPixel = null;
+  		    Pixel rightPixel = null;
+  	  	    
+  	  	  	// loop through the rows
+  	  	    for (int row = 160; row < 210; row++)
+  	  	    {
+  	  	    	// loop from 105 to just before the mirror point
+  	  	    	for (int col = 105; col < mirrorPoint; col++)
+  	  	    	{
+  	  	    		//Initializing right and left pixels
+  	  	    		leftPixel = pixels[row][col];      //Setting the left pixel
+  	  	    		rightPixel = pixels[row][mirrorPoint - col + gap + 165];	//Setting the right pixel
+  	  	        
+  	  	    		rightPixel.setColor(leftPixel.getColor()); //Applying Mirror
+  	  	    	}
+  	  	    }
+  	    }
+  	    
+  	    
+  	    
+  	    
+  	}
   
   /** copy from the passed fromPic to the
     * specified startRow and startCol in the
@@ -318,11 +390,19 @@ public class Picture extends SimplePicture
   public void randomColor()
   {
 	  Pixel[][] pixels = this.getPixels2D();
-  }
-  
-  public void drawBox(Picture p)
-  {
-	  p.
+	  for(Pixel[] row: pixels)
+	  {
+		  for(Pixel currentPixel: row)
+		  {
+			  int randomRed, randomBlue, randomGreen;
+			  randomRed = (int)(Math.random()*256);
+			  randomBlue = (int)(Math.random()*256);
+			  randomGreen = (int)(Math.random()*256);
+			  currentPixel.setRed(randomRed);
+			  currentPixel.setBlue(randomBlue);
+			  currentPixel.setGreen(randomGreen);
+		  }
+	  }
   }
   
   /* Main method for testing - each class in Java can have a main 
@@ -330,9 +410,9 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
+    Picture beach = new Picture("snowman.jpg");
     beach.explore();
-    beach.mirrorHorizontalBottomToTop();
+    beach.mirrorArms();
     beach.explore();
   }
   
